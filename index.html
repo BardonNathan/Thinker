@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LazyThinker</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+	<nav>
+		<button onclick="this.parentElement.classList.toggle('closed')">Projets</button>
+		<h1>Lazy<span>Thinker</span></h1>
+		<ul>
+			<li><a href="#">+ Add new</a></li>
+			<li><a href="#">prjA</a></li>
+			<li><a href="#">prjB</a></li>
+			<li><a href="#">prjC</a></li>
+		</ul>
+
+		<footer>
+			Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>.<br/>
+			Developped by BARDON Nathan - <a href="https://www.lazyfox.fr">LazyFox.fr</a>.<br/>
+			Last update: 26 February, 2020.<br/>
+			Neither licence nor patent are applied.
+		</footer>
+	</nav><!--
+
+
+	--><section>
+		<aside>
+			<h1>Projet A</h1>
+			<span style="background-color: #FFFAC9">Cat A. Mettre des couleurs de même teinte où la saturation change.
+				<div>
+					<span style="background-color: #FFD4C9">Sub A.1</span>
+					<span style="background-color: #FFE4C9">Sub A.2</span>
+				</div>
+			</span>
+			<span style="background-color: #E4C5F6">
+				Cat B
+				<div>
+					<span style="background-color: #DFFCC7">
+						Sub B.1
+						<div>
+							<span style="background-color: #acdcba">Subsub B.1.1</span>
+							<span style="background-color: #C3EAF5">Subsub B.1.2</span>
+							<span style="background-color: #92b9ff">Subsub B.1.3</span>
+							<span style="background-color: #968cff">Subsub B.1.4</span>
+						</div>
+					</span>
+				</div>
+			</span>
+			<span style="background-color: #ff5672">Cat C</span>
+			<span style="background-color: #af9087">Cat D</span>
+			<span style="background-color: #e06277">Cat E</span>
+			<span id="add">+</span>
+		</aside>
+		
+		<form>
+			<input type="text" name="Description" placeholder="Type ideas here" autocomplete="off">
+
+			<div class="radio" data-checked="1">
+				<span onclick="this.parentElement.setAttribute('data-checked', 0)">Pas important</span>
+				<span onclick="this.parentElement.setAttribute('data-checked', 1)">Normal</span>
+				<span onclick="this.parentElement.setAttribute('data-checked', 2)">Très important</span>
+			</div>
+			<div class="radio" data-checked="1">
+				<span onclick="this.parentElement.setAttribute('data-checked', 0)">Pas urgent</span>
+				<span onclick="this.parentElement.setAttribute('data-checked', 1)">Normal</span>
+				<span onclick="this.parentElement.setAttribute('data-checked', 2)">Très urgent</span>
+			</div>
+	
+		</form>
+
+		<ul>
+			<li>
+				<h3>titreuh</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+				<i class="important"></i><i class="urgency"></i>
+				<i class="author">Nbardon</i>
+				<i class="date">26 Feb, 2020 12:09 PM</i>
+			</li>
+
+
+			<li>
+				<h3>titreuh</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+				<i class="-important"></i><i class="-urgency"></i>
+				<i class="author">Nbardon</i>
+				<i class="date">26 Feb, 2020 12:09 PM</i>
+			</li>
+		</ul>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+* { box-sizing: border-box; }
+
+html, body {
+	background-color: #EEE;
+	padding: 0;
+	margin: 0;
+}
+
+nav {
+	background-color: #444;
+	color: #EEE;
+	margin: 0;
+	border-right: 3px solid #666;
+	display: inline-block;
+	width: 250px;
+	height: 100%;
+	min-height: 100vh;
+	padding-top: 50px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	transition: width .3s, border-width .3s;
+	vertical-align: top;
+	position: relative;
+}
+
+nav ul {
+	padding: 0;
+	list-style: none;
+}
+
+nav ul li a {
+	display: block;
+	height: 50px;
+	widows: 100%;
+	padding-left: 20px;
+	color: #CCC;
+	text-decoration: none;
+	line-height: 50px;
+	transition: all .2s;
+}
+
+nav ul li a:hover {
+	color: #EEE;
+	padding-left: 30px;
+	background-color: #555;
+}
+
+nav.closed {
+	width: 0;
+	border-width: 0;
+}
+
+nav button {
+	position: fixed;
+	top: 5px;
+	left: 5px;
+}
+
+nav h1 {
+	margin: 0;
+	font-family: Helvetica, sans-serif;
+	text-align: center;
+}
+
+nav h1 span {
+	color: #D91;
+}
+
+nav footer a { color: #D77; }
+nav footer {
+	position: absolute;
+	bottom: 0;
+	background-color: #3A3A3A;
+	padding: 5px;
+	font-size: 12px;
+}
+
+section {
+	display: inline-block;
+	vertical-align: top;
+	transition: width .3s;
+	width: calc(100% - 250px);
+}
+
+nav.closed + section { width: calc(100%); }
+
+section aside {
+	background-color: #CCC;
+	width: 100%;
+	padding: 25px 25px 25px 100px;
+}
+
+section aside span {
+	padding: 5px 15px;
+	border: 1px solid #AAA;
+	border-radius: 3px;
+	text-decoration: none;
+	color: #333;
+	display: inline-block;
+	vertical-align: top;
+	margin: 5px;
+}
+
+section aside span#add {
+	border-radius: 50%;
+	background-color: #333;
+	color: #AAA;
+	padding: 0;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+
+section form input[type="text"] {
+	border: 1px solid #DDD;
+	width: 98%;
+	display: block;
+}
+
+
+section form input[type="text"],
+section form div.radio {
+	min-height: 40px;
+	line-height: 30px;
+	border-radius: 4px;
+	margin: 8px 1%;
+	padding: 5px;
+}
+
+section form div.radio::before {
+	width: 33%;
+	height: 100%;
+	content: '';
+	background-color: #378;
+	position: absolute;
+	left: 0; top: 0;
+	transition: left .2s;
+	z-index: 1;
+}
+
+section form div.radio[data-checked="1"]::before { left: 33%; }
+section form div.radio[data-checked="2"]::before { left: 67%; }
+
+section form div.radio {
+	display: inline-block;
+	vertical-align: top;
+	background-color: #59A;
+	position: relative;
+	padding:0;
+	font-size: 0;
+	width: 48%;
+	overflow-y: hidden;
+}
+
+section form div.radio span {
+	display: inline-block;
+	position: relative;
+	z-index: 2;
+	width: 33%;
+	text-align: center;
+	padding: 5px 0;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+section form {
+	margin: 15px 0 0 25%;
+	width: 50%;
+	font-size: 0;
+}
+@media (max-width: 950px) {
+	section form {
+		margin-left: 1%;
+		width: 98%;
+	}
+}
+
+section ul {
+	list-style: none;
+	padding: 0;
+}
+
+section ul li {
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	border-radius: 5px;
+	margin: 15px;
+	padding: 15px;
+}
+
+section ul li p { text-align: justify; }
+section ul li i.date {
+	background: url(./images/clock.svg) no-repeat 0 / 15px;
+	padding-left: 20px;
+	margin-left: 5px;
+}
+
+section ul li i.author {
+	background: url(./images/user.svg) no-repeat 0 / 15px;
+	padding-left: 20px;
+}
+
+section ul li i.important,
+section ul li i.-important,
+section ul li i.urgency,
+section ul li i.-urgency {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	margin: 0 2px;
+	vertical-align: middle;
+}
+
+section ul li i.-important,
+section ul li i.-urgency { filter: saturate(0); }
+
+section ul li i.important,
+section ul li i.-important {
+	background: url(./images/important.svg) no-repeat 0 / 25px;
+}
+/*
+section ul li i.-important {
+	background: url(./images/forbidden.svg) no-repeat -3px / 21px,
+				url(./images/important.svg) no-repeat 0 / 25px;
+}
+*/
+section ul li i.urgency,
+section ul li i.-urgency {
+	background: url(./images/urgency.svg) no-repeat 0 / 25px;
+}
+/*
+section ul li i.-urgency {
+	background: url(./images/forbidden.svg) no-repeat -3px / 21px,
+				url(./images/urgency.svg) no-repeat 0 / 25px;
+}*/
+
+
