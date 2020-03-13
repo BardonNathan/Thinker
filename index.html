@@ -4,7 +4,8 @@
 	<title>LazyThinker</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-
+	
+	<link rel="shortcut icon" href="./images/favicon.png?v=0" />
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -12,11 +13,9 @@
 	<nav>
 		<button onclick="this.parentElement.classList.toggle('closed')">Projets</button>
 		<h1>Lazy<span>Thinker</span></h1>
-		<ul>
+		<ul id="projectList">
 			<li><a href="#">+ Add new</a></li>
-			<li><a href="#">prjA</a></li>
-			<li><a href="#">prjB</a></li>
-			<li><a href="#">prjC</a></li>
+			<li class="prj"><img src="./images/bulb.svg"></li>
 		</ul>
 
 		<footer>
@@ -73,7 +72,7 @@
 	
 		</form>
 
-		<ul>
+		<ul id="ideaList">
 			<li>
 				<h3>titreuh</h3>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -105,5 +104,95 @@
 		</ul>
 	</section>
 
+
+	<script type="text/javascript">
+'use strict';
+// ---------------------------------------------------------------------------------------
+// Global variables
+let elems = {
+	prjLs: document.getElementById("projectList"),
+	ideas: document.getElementById("ideaList"),
+	aside: document.getElementsByTagName("section")[0].getElementsByTagName("aside")[0]
+};
+let projects = [];
+let loader = new Image();
+loader.src = "./images/bulb.svg";
+
+// ---------------------------------------------------------------------------------------
+// Added function to prototypes
+  
+/** Remove all children of an element.
+  */
+Element.prototype.empty = function() {
+	while (this.children.length > 0)
+		this.children[0].remove();
+};
+
+/** Remove all elements from a HTMLCollection.
+  * Usefull for getElementsByTagName and getElementsByClassName.
+  */
+HTMLCollection.prototype.removeAll = function() {
+	while (this.length > 0)
+		this[0].remove();
+}
+
+
+// ---------------------------------------------------------------------------------------
+// Sync functions
+
+/** Click event handler for project list > a
+  *
+  * @arg e MouseEvent
+  */
+function openProject(e) {
+	elems.aside.getElementsByTagName("span").removeAll();
+	elems.ideas.empty();
+	elems.ideas.append(loader);
+}
+
+/** Request the project list, update the nav list then restart after 10 seconds.
+  */
+function updateProjectList() {
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = () => {
+		if (xhr.readyState != XMLHttpRequest.DONE)
+			return;
+
+		let json;
+		try {
+			json = JSON.parse(xhr.responseText);
+		} catch (e) {
+			alert("Impossible de récupérer la liste des projets \n(Plus d'informations dans la console)");
+			console.log(e);
+			return;
+		}
+
+		elems.prjLs.getElementsByClassName("prj").removeAll();
+
+		projects = [];
+		json.forEach(proj => {
+			projects[proj._id] = proj;
+
+			let a = document.createElement("a");
+			a.addEventListener("click", openProject);
+			a.href = "#" + proj._id;
+			a.innerText = proj.name;
+
+			let li = document.createElement("li");
+			li.append(a);
+			li.className = "prj";
+
+			elems.prjLs.append(li);
+		});
+
+		setTimeout(updateProjectList, 10000);
+	}
+
+	xhr.open("GET", "/api/projects/");
+	xhr.send();
+}
+updateProjectList();
+
+	</script>
 </body>
 </html>

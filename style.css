@@ -28,6 +28,11 @@ nav ul {
 	list-style: none;
 }
 
+nav ul li img {
+	width: 50%;
+	margin-left: 25%;
+}
+
 nav ul li a {
 	display: block;
 	height: 50px;
@@ -60,6 +65,10 @@ nav h1 {
 	margin: 0;
 	font-family: Helvetica, sans-serif;
 	text-align: center;
+}
+nav h1 a {
+	color: #EEE;
+	text-decoration: none;
 }
 
 nav h1 span {
@@ -99,6 +108,12 @@ section aside span {
 	display: inline-block;
 	vertical-align: top;
 	margin: 5px;
+	transition: border-color .2s;
+	cursor: pointer;
+}
+
+section aside span.selected {
+	border-color: #E39;
 }
 
 section aside span#add {
@@ -140,8 +155,8 @@ section form div.radio::before {
 	z-index: 1;
 }
 
-section form div.radio[data-checked="1"]::before { left: 33%; }
-section form div.radio[data-checked="2"]::before { left: 67%; }
+section form input.radio[value="1"] + div.radio::before { left: 33%; }
+section form input.radio[value="2"] + div.radio::before { left: 67%; }
 
 section form div.radio {
 	display: inline-block;
@@ -155,6 +170,7 @@ section form div.radio {
 }
 
 section form div.radio span {
+	user-select: none;
 	display: inline-block;
 	position: relative;
 	z-index: 2;
@@ -175,6 +191,11 @@ section form {
 		margin-left: 1%;
 		width: 98%;
 	}
+}
+
+section ul img {
+	display: block;
+	margin: auto;
 }
 
 section ul {
