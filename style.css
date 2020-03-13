@@ -211,7 +211,23 @@ section ul li {
 	padding: 15px;
 }
 
+section ul li h3 {}
+section ul li h2 {
+	text-align: center;
+}
+
 section ul li p { text-align: justify; }
+section ul li p span.circle {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	line-height: 18px;
+	border: 1px solid #999;
+	border-radius: 50%;
+}
+
+section ul li h2 + p { color: #999; text-align: center; }
+
 section ul li i.date {
 	background: url(./images/clock.svg) no-repeat 0 / 15px;
 	padding-left: 20px;
