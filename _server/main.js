@@ -1,5 +1,29 @@
 "use strict";
 
+/* ============================================
+ *  Thinker server
+ *
+ *  Author: BARDON Nathan <nbardon@lazyfox.fr>
+ *  Date: March 2020
+ * ============================================
+ *
+ * NGinx configuration :
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name localhost;
+        
+    root /websiteRoot;
+
+    location /api/ {
+        proxy_pass http://localhost:44293;
+    }
+}
+
+ */
+
 const http 			= require("http");
 const MongoClient 	= require('mongodb').MongoClient;
 
