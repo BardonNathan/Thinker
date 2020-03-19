@@ -2,7 +2,7 @@
 A small website to note some ideas and save it to a database
 
 ## NGinx
-	NodeJS needs to be accessible via everybody. To use same port for the NodeJS server and the website, you can use the reverse proxy function. It is also available in Apache HTTPD but it is not seen here.
+NodeJS needs to be accessible via everybody. To use same port for the NodeJS server and the website, you can use the reverse proxy function. It is also available in Apache HTTPD but it is not seen here.
 
 ```
 server {
