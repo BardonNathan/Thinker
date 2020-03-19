@@ -1,0 +1,15 @@
+{
+  "name": "Thinker_connector",
+  "author": {
+    "name": "Nathan",
+    "email": "nb@lazyfox.fr",
+    "url": "https://lazyfox.fr"
+  },
+  "version": "1.0.0",
+  "description": "Connector between Thinker website and its database.",
+  "main": "./main.js",
+  "private": true,
+  "dependencies": {
+    "mongodb": "^3.5.4"
+  }
+}
