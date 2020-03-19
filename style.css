@@ -1,5 +1,10 @@
 * { box-sizing: border-box; }
 
+button:active, button::-moz-focus-inner, a, a::-moz-focus-inner {
+	outline: none;
+	border: 0;
+}
+
 html, body {
 	background-color: #EEE;
 	padding: 0;
@@ -15,7 +20,7 @@ nav {
 	width: 250px;
 	height: 100%;
 	min-height: 100vh;
-	padding-top: 50px;
+	padding-top: 75px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	transition: width .3s, border-width .3s;
@@ -54,11 +59,27 @@ nav.closed {
 	width: 0;
 	border-width: 0;
 }
-
 nav button {
 	position: fixed;
-	top: 5px;
-	left: 5px;
+	top: 0;
+	left: 0;
+	width: 250px;
+	border: 0;
+	background-color: #666;
+	color: #DDD;
+	padding: 15px 0;
+	transition: .2s transform, .2s width .2s, .5s background-color .4s;
+	cursor: pointer;
+	transform-origin: bottom left;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+
+nav.closed button {
+	background-color: #A25;
+	width: 75px;
+	transform: rotate(90deg);
 }
 
 nav h1 {
@@ -100,9 +121,9 @@ section aside {
 }
 
 section aside span {
-	padding: 5px 15px;
+	padding: 5px 25px;
 	border: 1px solid #AAA;
-	border-radius: 3px;
+	border-radius: 5px;
 	text-decoration: none;
 	color: #333;
 	display: inline-block;
@@ -110,6 +131,19 @@ section aside span {
 	margin: 5px;
 	transition: border-color .2s;
 	cursor: pointer;
+	position: relative;
+}
+
+section aside span:not(#add)::before {
+	position: absolute;
+	top: 11px;
+	left: 5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: var(--b, #F55);
+	border: 1px solid #999;
+	content: "";
 }
 
 section aside span.selected {
@@ -203,6 +237,21 @@ section ul {
 	padding: 0;
 }
 
+@keyframes ideaIn {
+	0% {
+		opacity: 0;
+		margin-top: -100%;
+	}
+
+	100% {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+section ul li.new {
+}
+
 section ul li {
 	background-color: #FFF;
 	border: 1px solid #DDD;
@@ -274,3 +323,92 @@ section ul li i.-urgency {
 }*/
 
 
+
+@keyframes errorIn {
+	0%   { top: -100%; }
+	80%  { top: 25px; }
+	90%  { top: 10px; }
+	100% { top: 15px; }
+}
+
+@keyframes errorOut {
+  from { transform: perspective(400px); }
+
+  30% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  to {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+
+.error {
+	position: fixed;
+	top: 15px;
+	left: 25%;
+	padding: 15px;
+
+	border-top: 5px solid #D33;
+	background-color: #E55;
+	color: #C22;
+	cursor: not-allowed;
+
+	width: 50%;
+	animation: errorIn .7s;
+	box-shadow: 0 5px 5px rgba(0,0,0, .3);
+	z-index: 999;
+}
+
+.error.closable {
+	cursor: pointer;
+}
+
+.error::before {
+	content: "\1F92A";
+	font-size: 50px;
+	float: left;
+}
+
+.error.closable::after {
+	content: "\274C";
+
+	position: absolute;
+	top: 5px;
+	right: 10px;
+
+	font-size: 20px;
+}
+
+.error + .errorbg {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0, .7);
+	z-index: 998;
+}
+
+.error.closing + .errorbg {
+	opacity: 0;
+	transition: .2s opacity;
+}
+
+.error.closing {
+	animation: .5s errorOut both;
+	backface-visibility: visible;
+}
+
+.error h1 {
+	font-size: 16px;
+	margin: 0 0 0 70px;
+}
+
+.error p {
+	margin: 0 0 0 100px;
+}

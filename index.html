@@ -12,7 +12,7 @@
 
 	<nav>
 		<button onclick="this.parentElement.classList.toggle('closed')">Projets</button>
-		<h1><a href="">Lazy<span>Thinker</span></a></h1>
+		<h1><a href="">&#x1F98A; Lazy<span>Thinker</span></a></h1>
 		<ul id="projectList">
 			<li><a href="#">+ Add new</a></li>
 			<li class="prj"><img src="./images/bulb.svg"></li>
@@ -30,29 +30,29 @@
 	--><section>
 		<aside>
 			<h1>Projet A</h1>
-			<span class="cat" style="background-color: #FFFAC9">Cat A. Mettre des couleurs de même teinte où la saturation change.
+			<span class="cat" style="--b: #FFFAC9">Cat A. Mettre des couleurs de même teinte où la saturation change.
 				<div>
-					<span class="cat" style="background-color: #FFD4C9">Sub A.1</span>
-					<span class="cat" style="background-color: #FFE4C9">Sub A.2</span>
+					<span class="cat" style="--b: #FFD4C9">Sub A.1</span>
+					<span class="cat" style="--b: #FFE4C9">Sub A.2</span>
 				</div>
 			</span>
-			<span class="cat" style="background-color: #E4C5F6">
+			<span class="cat" style="--b: #E4C5F6">
 				Cat B
 				<div>
-					<span class="cat" style="background-color: #DFFCC7">
+					<span class="cat" style="--b: #DFFCC7">
 						Sub B.1
 						<div>
-							<span class="cat" style="background-color: #acdcba">Subsub B.1.1</span>
-							<span class="cat" style="background-color: #C3EAF5">Subsub B.1.2</span>
-							<span class="cat" style="background-color: #92b9ff">Subsub B.1.3</span>
-							<span class="cat" style="background-color: #968cff">Subsub B.1.4</span>
+							<span class="cat" style="--b: #acdcba">Subsub B.1.1</span>
+							<span class="cat" style="--b: #C3EAF5">Subsub B.1.2</span>
+							<span class="cat" style="--b: #92b9ff">Subsub B.1.3</span>
+							<span class="cat" style="--b: #968cff">Subsub B.1.4</span>
 						</div>
 					</span>
 				</div>
 			</span>
-			<span class="cat" style="background-color: #ff5672">Cat C</span>
-			<span class="cat" style="background-color: #af9087">Cat D</span>
-			<span class="cat" style="background-color: #e06277">Cat E</span>
+			<span class="cat" style="--b: #ff5672">Cat C</span>
+			<span class="cat" style="--b: #af9087">Cat D</span>
+			<span class="cat" style="--b: #e06277">Cat E</span>
 			<span id="add">+</span>
 		</aside>
 		
@@ -89,6 +89,7 @@ let elems = {
 	ideas: document.getElementById("ideaList"),
 	aside: document.getElementsByTagName("section")[0].getElementsByTagName("aside")[0]
 };
+elems.projectTitle = elems.aside.getElementsByTagName("h1")[0];
 let projects = [];
 let openedProject;
 let openedCategory;
@@ -115,6 +116,59 @@ HTMLCollection.prototype.removeAll = function() {
 
 
 // ---------------------------------------------------------------------------------------
+// Misc functions
+/** Display an error in a popup.
+  *
+  * @arg message Message to be printed
+  * @arg disableAll (optional) Show a transparent pane between error and other elements to disable interaction with them. Default = false
+  * @arg closable (optional) Make the error closable. Default = true
+  *
+  * @return Error HTML element
+  */
+function showError(message, disableAll, closable) {
+	disableAll = (disableAll == undefined || disableAll == null) ? false : disableAll;
+	closable = (closable == undefined || closable == null) ? true : closable;
+
+	let bg;
+	if (disableAll) {
+		bg = document.createElement("div");
+		bg.className = "errorbg";
+	}
+
+
+	let title = document.createElement("h1");
+	title.innerHTML = "Une erreur s'est produite !";
+
+	let p = document.createElement("p");
+	p.innerHTML = message;
+
+
+	let error = document.createElement("div");
+	error.className = "error" + (closable ? " closable" : "");
+	if (closable) {
+		error.addEventListener("click", (e) => {
+			error.classList.add("closing");
+			setTimeout(() => {
+				error.remove();
+
+				if (disableAll)
+					bg.remove();
+			}, 600);
+		});
+	}
+	error.append(title);
+	error.append(p);
+
+	document.body.append(error);
+
+	if (disableAll)
+		document.body.append(bg);
+
+	return error;
+}
+
+
+// ---------------------------------------------------------------------------------------
 // Sync functions
 
 /** Request ideas from a category and show them.
@@ -124,6 +178,7 @@ HTMLCollection.prototype.removeAll = function() {
 function openCategory(catName) {
 	openedCategory = catName;
 	elems.ideas.empty();
+	elems.projectTitle.innerText = `${projects[openedProject].name} - ${openedCategory}`;
 
 	let to = setTimeout(() => {
 		elems.ideas.append(loader);
@@ -140,12 +195,29 @@ function openCategory(catName) {
 		try {
 			json = JSON.parse(xhr.responseText);
 		} catch (e) {
-			alert("Impossible de récupérer la liste des idées \n(Plus d'informations dans la console)");
+			showError("Impossible de récupérer la liste des idées. Veuillez réessayer ultérieurement.<br/><i>Plus d'informations dans la console.</i>");
 			console.log(e);
 			return;
 		}
 
 		elems.ideas.empty();
+		if (json.length == 0) {
+			let h2 = document.createElement("h2");
+			h2.innerHTML = "Pas d'idées ici &#x1F914;";
+
+			let p = document.createElement("p");
+			p.innerHTML = "Vous pouvez en ajouter dans le formulaire au dessus.";
+
+
+			let li = document.createElement("li");
+			li.append(h2);
+			li.append(p);
+
+			elems.ideas.append(li);
+			return;
+		}
+
+
 		json.forEach(idea => {
 			let h3 = document.createElement("h3");
 			h3.innerText = idea.name;
@@ -198,7 +270,9 @@ function openProject(e) {
 
 	categories.forEach((cat) => {
 		let span = document.createElement("span");
-		span.addEventListener("click", openCategory);
+		span.addEventListener("click", (e) => {
+			openCategory(e.target.innerText);
+		});
 		span.innerText = cat;
 		span.className = "cat";
 
@@ -208,8 +282,10 @@ function openProject(e) {
 	if (categories.length > 0)
 		openCategory(categories[0]);
 	else {
+		elems.projectTitle.innerText = projects[openedProject].name;
+
 		let h2 = document.createElement("h2");
-		h2.innerText = "Pas de catégories !";
+		h2.innerHTML = "Pas de catégories ! &#x1F928;";
 
 		let p = document.createElement("p");
 		p.innerHTML = "Vous pouvez créer une catégorie grâce au <span class='circle'>+</span> au dessus.";
@@ -236,7 +312,7 @@ function updateProjectList() {
 		try {
 			json = JSON.parse(xhr.responseText);
 		} catch (e) {
-			alert("Impossible de récupérer la liste des projets \n(Plus d'informations dans la console)");
+			showError("Impossible de récupérer la liste des projets. Veuillez recharger la page ultérieurement.<br/><i>(Plus d'informations dans la console)</i>", true, false);
 			console.log(e);
 			return;
 		}
